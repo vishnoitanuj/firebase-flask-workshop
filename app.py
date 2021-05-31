@@ -11,7 +11,6 @@ cred = credentials.Certificate(FIREBASE_SERVICE_KEY)
 default_app = initialize_app(cred)
 db = firestore.client()
 todo_ref = db.collection('todos')
-print(cred)
 
 @app.route('/', methods = ['GET', 'POST'])
 def index():
