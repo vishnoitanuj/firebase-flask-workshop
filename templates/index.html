@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-4">
+    <form class="form-inline" method='post' action="/">
+        <div class="form-group row">
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="task">
+            </div>
+            <div class="col-sm-4">
+                <button type="submit" class="btn btn-primary">Add Task</button>
+            </div>
+        </div>
+    </form>
+  </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col">
+        {% if todos|length < 1 %}
+        <h4 style="text-align: center">You have no tasks!</h4>
+        {% else %}
+        <table class="table table-striped text-center">
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Completed</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            {% for todo in todos %}
+            <tr>
+                <td>{{ todo.task }}</td>
+                {% if todo.completed %}
+                <td>&#127988;</td>
+                {% else %}
+                <td>&#10060;</td>
+                {% endif %}
+                <td style="display: inline-block; text-align: left">
+                    <a href="/delete/{{todo.id}}">&#128465;</a>
+                    <br/>
+                    {% if not todo.completed %}
+                    <a href="/complete/{{todo.id}}">&#9989;</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

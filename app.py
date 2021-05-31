@@ -11,6 +11,7 @@ cred = credentials.Certificate(FIREBASE_SERVICE_KEY)
 default_app = initialize_app(cred)
 db = firestore.client()
 todo_ref = db.collection('todos')
+print(cred)
 
 @app.route('/', methods = ['GET', 'POST'])
 def index():
@@ -39,3 +40,15 @@ def complete(id):
         return redirect('/')
     except:
         return 'There was an issue updating your task'
+
+@app.route('/delete/<id>')
+def delete(id):
+    try:
+        todo_ref.document(id).delete()
+        return redirect('/')
+    except:
+        return 'There was an issue deleting the task'
+
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 8080))
+    app.run(host='0.0.0.0', port=port, debug=True)
